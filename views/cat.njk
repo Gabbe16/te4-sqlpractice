@@ -1,0 +1,14 @@
+{% extends "layout.njk" %}
+
+{% block content %}
+<main>
+    <a href="/dbtest">Back to cats</a>
+    <p>This site is to view a specific cat.</p>
+    <div class="card">
+        <h1>Name: {{ cat.name }}</h1>
+        <p>Age: {{ cat.age }}</p>
+        <h2>Breed: {{ cat.breed }}</h2>
+        <p>{{ cat.description}}</p>
+    </div>
+</main>
+{% endblock %}

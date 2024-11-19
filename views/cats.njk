@@ -5,7 +5,7 @@
     <h1>{{ title }}</h1>
     <ul>
         {% for cat in cats %}
-        <li>{{ cat.name }}, {{ cat.age }}, {{ cat.breed }} Cat</li>
+        <a href="/dbtest/{{cat.id}}"><li>{{ cat.name }}, {{ cat.age }}, {{ cat.breed }} Cat</li></a>
         {% endfor %}
     </ul>
 </main>

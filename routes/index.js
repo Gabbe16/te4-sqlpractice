@@ -20,6 +20,22 @@ router.get('/dbtest', async function (req, res) {
     }
 })
 
+// db test route to get specific cat
+router.get('/dbtest/:id', async function (req, res) {
+    try {
+        const [catsWithBreed] = await pool.promise().query(
+            `SELECT cats.*, cat_breeds.name AS breed, cat_breeds.description FROM cats JOIN cat_breeds ON cats.breed_id = cat_breeds.id WHERE cat_breeds.id = ?`, [req.params.id]
+        );
+        return res.render('cat.njk', {
+            title: 'Specific Cat',
+            cat: catsWithBreed[0] 
+        })
+    } catch (error) {
+        console.log(error)
+        res.sendStatus(500)
+    }
+})
+
 // Homepage
 router.get('/', function (req, res) {
     res.render('index.njk', { title: 'Welcome' })
