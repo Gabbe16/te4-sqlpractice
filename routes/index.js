@@ -42,9 +42,36 @@ router.get('/dbtest/:id', async function (req, res) {
     }
 })
 
+router.get('/cat/new', async function (req, res) {
+    try {
+      const [breeds] = await pool.promise().query('SELECT * FROM cat_breeds')
+      return res.render('newcat.njk', {
+        title: 'Ny katt',
+        breeds: breeds
+      })
+    } catch (error) {
+      console.log(error)
+      res.sendStatus(500)
+    }
+  })
+
+router.post('/dbtestPOST', async function (req, res) {
+    try {
+        const [result] = await pool.promise().query(
+            `INSERT INTO cats (name, breed_id, age)
+             VALUES (?, ?, ?)`, [req.body.name, req.breed_id, req.body.age]
+        )
+        res.redirect('/')
+    } catch (error) {
+        console.log(error)
+        res.sendStatus(500)
+    }
+})
+
 // Homepage
 router.get('/', function (req, res) {
     res.render('index.njk', { title: 'Welcome' })
+    console.log('test')
 })
 
 // Get all cats
