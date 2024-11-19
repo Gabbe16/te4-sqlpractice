@@ -1,6 +1,25 @@
 const express = require('express')
 const router = express.Router()
 
+const pool = require('../db')
+
+// db test route to get all cats
+router.get('/dbtest', async function (req, res) {
+    try {
+        const [catsWithBreed] = await pool.promise().query(
+            `SELECT cats.*, cat_breeds.name AS breed FROM cats JOIN cat_breeds ON cats.breed_id = cat_breeds.id;`
+        );
+        console.log(catsWithBreed)
+        return res.render('cats.njk', {
+            title: 'All Cats',
+            cats: catsWithBreed
+        })
+    } catch (error) {
+        console.log(error)
+        res.sendStatus(500)
+    }
+})
+
 // Homepage
 router.get('/', function (req, res) {
     res.render('index.njk', { title: 'Welcome' })
@@ -26,7 +45,7 @@ router.get('/races/:id', function (req, res) {
     res.render('', { title: 'Specific race' })
 })
 
-// SELECT * FROM cats JOIN cat_breeds ON cats.breed_id = cat_breeds.id
+// 
 
 
 module.exports = router
