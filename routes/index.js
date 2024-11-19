@@ -7,7 +7,10 @@ const pool = require('../db')
 router.get('/dbtest', async function (req, res) {
     try {
         const [catsWithBreed] = await pool.promise().query(
-            `SELECT cats.*, cat_breeds.name AS breed FROM cats JOIN cat_breeds ON cats.breed_id = cat_breeds.id;`
+            `SELECT cats.*, cat_breeds.name AS breed 
+             FROM cats 
+             JOIN cat_breeds 
+             ON cats.breed_id = cat_breeds.id;`
         );
         console.log(catsWithBreed)
         return res.render('cats.njk', {
@@ -24,11 +27,14 @@ router.get('/dbtest', async function (req, res) {
 router.get('/dbtest/:id', async function (req, res) {
     try {
         const [catsWithBreed] = await pool.promise().query(
-            `SELECT cats.*, cat_breeds.name AS breed, cat_breeds.description FROM cats JOIN cat_breeds ON cats.breed_id = cat_breeds.id WHERE cat_breeds.id = ?`, [req.params.id]
+            `SELECT cats.*, cat_breeds.name AS breed, cat_breeds.description
+             FROM cats 
+             JOIN cat_breeds 
+             ON cats.breed_id = cat_breeds.id WHERE cat_breeds.id = ?`, [req.params.id]
         );
         return res.render('cat.njk', {
             title: 'Specific Cat',
-            cat: catsWithBreed[0] 
+            cat: catsWithBreed[0]
         })
     } catch (error) {
         console.log(error)
@@ -60,8 +66,5 @@ router.get('/races', function (req, res) {
 router.get('/races/:id', function (req, res) {
     res.render('', { title: 'Specific race' })
 })
-
-// 
-
 
 module.exports = router
