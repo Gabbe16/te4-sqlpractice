@@ -13,7 +13,7 @@
         </div>
         <div class="form-element">
             <label for="breed">Ras:</label>
-            <select name="breed" id="breed_id">
+            <select name="breed" id="breed">
                 {% for breed in breeds %}
                 <option value="{{ breed.id }}">{{ breed.name }}</option>
                 {% endfor %}
