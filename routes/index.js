@@ -41,6 +41,7 @@ router.get('/dbtest/:id', async function (req, res) {
     }
 })
 
+// db test get route to add a new cat
 router.get('/cat/new', async function (req, res) {
     try {
         const [breeds] = await pool.promise().query('SELECT * FROM cat_breeds')
@@ -54,6 +55,7 @@ router.get('/cat/new', async function (req, res) {
     }
 })
 
+// db test post route to post the new cat to db
 router.post('/dbtestPOST', async function (req, res) {
     try {
         const [result] = await pool.promise().query(
